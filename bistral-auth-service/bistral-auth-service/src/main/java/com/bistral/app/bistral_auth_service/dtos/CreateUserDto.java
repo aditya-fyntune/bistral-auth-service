@@ -20,7 +20,7 @@ import lombok.Data;
  */
 @Data
 
-public class UserSignUpDto {
+public class CreateUserDto {
 
     @NotNull
     @Min(4)

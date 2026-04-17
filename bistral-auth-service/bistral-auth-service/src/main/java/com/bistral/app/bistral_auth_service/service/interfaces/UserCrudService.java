@@ -1,20 +1,32 @@
 package com.bistral.app.bistral_auth_service.service.interfaces;
 
-import com.bistral.app.bistral_auth_service.dtos.UserDto;
-import com.bistral.app.bistral_auth_service.dtos.UserSignUpDto;
+import com.bistral.app.bistral_auth_service.dtos.CreateUserDto;
+import com.bistral.app.bistral_auth_service.dtos.UserResponseDto;
+import com.bistral.app.bistral_auth_service.entity.UserEntity;
+
+import java.util.UUID;
 
 /**
- * provide interface for crud service of global users
+ * provide interface for crud service of global {@link  UserEntity}
  *
  */
 public interface UserCrudService {
 
     /**
-     * Create user with given information
+     * Create user in system.
+     * @param userSignUpDto required information for creation of user
+     *
+     * @return {@link  UserResponseDto} represent abstraction of {@link UserEntity}
      */
-    public UserDto createUser(UserSignUpDto userSignUpDto);
+    public UserResponseDto createUser(CreateUserDto userSignUpDto);
 
-    public  void  getUser();
-    public  void  getUserList();
+    /**
+     * Find and Return user of a given id
+     * @param userId represent userid
+     * @return {@link  UserResponseDto} represent api contract object of {@link  com.bistral.app.bistral_auth_service.entity.UserEntity}
+     */
+    public UserResponseDto getUserById(UUID userId);
+
+
 
 }

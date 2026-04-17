@@ -1,8 +1,8 @@
 package com.bistral.app.bistral_auth_service.controllers;
 
 
-import com.bistral.app.bistral_auth_service.dtos.Response;
-import com.bistral.app.bistral_auth_service.dtos.UserSignUpDto;
+import com.bistral.app.bistral_auth_service.dtos.ApiResponse;
+import com.bistral.app.bistral_auth_service.dtos.CreateUserDto;
 import com.bistral.app.bistral_auth_service.service.interfaces.UserCrudService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,8 +23,9 @@ public class UserCrudController {
 
 
     @PostMapping("")
-    public Response<UserDTo> createUser(@Valid @RequestBody UserSignUpDto userSignUpDto){
+    public ApiResponse<?> createUser(@Valid @RequestBody CreateUserDto userSignUpDto){
         userCrudService.createUser(userSignUpDto);
+        return null;
     }
 
     @GetMapping("/{userId}")

@@ -1,11 +1,14 @@
 package com.bistral.app.bistral_auth_service.entity;
 
+import com.bistral.app.bistral_auth_service.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -23,12 +26,19 @@ import java.util.UUID;
  *      <li>userEmail</li>
  *      <li>userHashPassword</li>
  *  </ul>
+ *  <p>
+ *      <code>Note</code>
+ *      <ul>
+ *          <li>A username and userEmail should be unique where deleted at is null</li>
+ *          <li>To ensure all active user have unique email and username</li>
+ *      </ul>
+ *  </p>
  * </p>
  *
  *
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user_entity")
 @Getter
 @Setter
 @Builder
@@ -44,4 +54,22 @@ public class UserEntity{
     private  String userEmail;
     @Column(nullable = false)
     private  String userHashPasswd;
+
+    @Column
+    private UserType userTypeEnum;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false, columnDefinition = "DEFAULT 0")
+    private  Boolean isActive;
+
+    @Column
+    private LocalDateTime deletedAt;
+
+
 }

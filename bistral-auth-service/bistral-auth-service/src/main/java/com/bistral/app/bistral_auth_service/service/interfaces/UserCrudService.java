@@ -4,6 +4,7 @@ import com.bistral.app.bistral_auth_service.dtos.CreateUserDto;
 import com.bistral.app.bistral_auth_service.dtos.UserResponseDto;
 import com.bistral.app.bistral_auth_service.entity.UserEntity;
 import com.bistral.app.bistral_auth_service.exceptions.UserNotFoundException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
  * provide interface for crud service of global {@link  UserEntity}
  *
  */
-public interface UserCrudService {
+public interface UserCrudService extends UserDetailsService {
 
     /**
      * Create user in system.

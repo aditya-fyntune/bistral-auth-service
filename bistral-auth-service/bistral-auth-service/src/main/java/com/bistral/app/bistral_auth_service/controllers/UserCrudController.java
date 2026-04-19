@@ -24,15 +24,6 @@ public class UserCrudController {
     private final UserCrudService userCrudService;
 
 
-    @PostMapping
-    public ApiResponse<UserResponseDto> createUser(@Valid @RequestBody CreateUserDto userSignUpDto){
-       return ApiResponse.<UserResponseDto>builder()
-               .message("Sign up Success fully")
-               .data(userCrudService.createUser(userSignUpDto))
-               .build();
-
-    }
-
     @GetMapping("/{userId}")
     public ApiResponse<Object> findUserById(@PathVariable UUID userId) throws UserNotFoundException {
         return  ApiResponse

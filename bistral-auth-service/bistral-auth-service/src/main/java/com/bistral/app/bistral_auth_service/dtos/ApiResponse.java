@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Builder
 @AllArgsConstructor
 @Data
 public class ApiResponse<T> {
     String message;
-    Integer status;
-    Boolean isError;
+    Boolean isError = false;
     T data;
+    Map<String,Object> meta = new HashMap<>();
 }

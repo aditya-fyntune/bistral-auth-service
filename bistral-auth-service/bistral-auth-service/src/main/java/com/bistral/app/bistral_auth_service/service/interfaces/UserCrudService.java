@@ -3,6 +3,7 @@ package com.bistral.app.bistral_auth_service.service.interfaces;
 import com.bistral.app.bistral_auth_service.dtos.CreateUserDto;
 import com.bistral.app.bistral_auth_service.dtos.UserResponseDto;
 import com.bistral.app.bistral_auth_service.entity.UserEntity;
+import com.bistral.app.bistral_auth_service.exceptions.UserNotFoundException;
 
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public interface UserCrudService {
      * @param userId represent userid
      * @return {@link  UserResponseDto} represent api contract object of {@link  com.bistral.app.bistral_auth_service.entity.UserEntity}
      */
-    public UserResponseDto getUserById(UUID userId);
+    public UserResponseDto getUserById(UUID userId) throws UserNotFoundException;
 
 
 

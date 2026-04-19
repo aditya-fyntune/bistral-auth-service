@@ -1,6 +1,9 @@
 package com.bistral.app.bistral_auth_service.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -26,16 +29,24 @@ import java.util.UUID;
  *     </ul>
  * </note>
  */
+@Entity
+@Table(
+        name = "resources"
+)
+@Builder
+@Getter
+@Setter
 public class ResourceEntity {
 
     @Id
     @GeneratedValue( strategy = GenerationType.UUID)
     @Column(name = "resource_id")
     private UUID resourceId;
+    @Column(name = "resource_name")
     private String resourceName;
 
     @ManyToOne
-    @Column(name = "created_by", nullable = false)
+    @JoinColumn(name = "created_by", nullable = false)
     private UserEntity createdBy;
 
     @Column(name = "created_at", nullable = false)
@@ -46,7 +57,7 @@ public class ResourceEntity {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "updated_by", nullable = false)
+    @JoinColumn(name = "updated_by")
     private UserEntity updated_by;
 
 

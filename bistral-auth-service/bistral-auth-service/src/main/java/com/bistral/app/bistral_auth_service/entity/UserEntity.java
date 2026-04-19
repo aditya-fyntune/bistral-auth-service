@@ -2,13 +2,15 @@ package com.bistral.app.bistral_auth_service.entity;
 
 import com.bistral.app.bistral_auth_service.enums.UserType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,38 +40,60 @@ import java.util.UUID;
  *
  */
 @Entity
-@Table(name = "user_entity")
+@Table(name = "bistral_users")
 @Getter
 @Setter
 @Builder
-public class UserEntity{
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserEntity implements UserDetails {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private  UUID userId;
 
-    @Column(nullable = false)
+    @Column(name = "user_name", nullable = false)
     private  String userName;
 
-    @Column(nullable = false)
+
+    @Column(name = "user_email", nullable = false)
     private  String userEmail;
-    @Column(nullable = false)
+
+    @Column(name = "password_hash", nullable = false)
     private  String userHashPasswd;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type")
     private UserType userTypeEnum;
 
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false, columnDefinition = "DEFAULT 0")
-    private  Boolean isActive;
+    @Builder.Default
+    @Column(name = "is_active", nullable = false, columnDefinition = "DEFAULT 1")
+    private  Boolean isActive = true;
 
-    @Column
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return this.userHashPasswd;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
 
 }

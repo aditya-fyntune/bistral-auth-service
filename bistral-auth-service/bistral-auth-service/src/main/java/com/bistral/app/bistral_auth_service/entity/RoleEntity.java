@@ -16,6 +16,7 @@ import java.util.UUID;
  *     <li>By Default Owner Role is Created for each bistro</li>
  * </ul>
  */
+@Entity
 @Table(name = "user_roles",
         uniqueConstraints = {
         @UniqueConstraint(
@@ -44,7 +45,7 @@ public class RoleEntity {
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by",nullable = false)
+    @JoinColumn(name = "created_by",nullable = false)
     @ManyToOne
     private UserEntity createdBy;
 
@@ -52,7 +53,7 @@ public class RoleEntity {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @Column(name = "updated_by")
+    @JoinColumn(name = "updated_by")
     private UserEntity updatedBy;
 }
 

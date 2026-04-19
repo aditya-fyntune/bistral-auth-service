@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.UUID;
 
 /**
- * Data Transfer Object representing user details exposed in API responses.
+ * Data Transfer Object representing {@link  com.bistral.app.bistral_auth_service.entity.UserEntity} details exposed in API responses.
  *
  * <p>
  * This DTO contains only non-sensitive and required user information

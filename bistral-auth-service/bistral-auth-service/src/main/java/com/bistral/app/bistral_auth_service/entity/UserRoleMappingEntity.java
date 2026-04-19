@@ -19,6 +19,7 @@ import java.util.UUID;
  *     multiple roles in one or different bistros.
  * </note>
  */
+@Entity
 @Table
         (name = "user_role_mappings",
                 uniqueConstraints =
@@ -42,11 +43,11 @@ public class UserRoleMappingEntity {
     private UUID userRoleMappingId;
 
     @ManyToOne
-    @Column(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity role;
 
     @ManyToOne
-    @Column(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id" , nullable = false)
     private UserEntity user;
 
     @Column(name = "bistro_id", nullable = false)
@@ -56,7 +57,7 @@ public class UserRoleMappingEntity {
     private  UUID branch_id;
 
     @ManyToOne
-    @Column(name = "created_by", nullable = false)
+    @JoinColumn(name = "created_by", nullable = false)
     private UserEntity createdBy;
 
     @Column(name = "created_at", nullable = false)
@@ -67,7 +68,7 @@ public class UserRoleMappingEntity {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "updated_by", nullable = false)
+    @JoinColumn(name = "updated_by", nullable = false)
     private UserEntity updated_by;
 
 }

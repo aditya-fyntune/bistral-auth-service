@@ -1,17 +1,16 @@
 package com.bistral.app.bistral_auth_service.dtos;
 
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Map;
 import java.util.UUID;
 
-@Data
 @Builder
-public class RoleAssignmentDto {
-    @NotNull
+@Data
+public class UserRoleResponseDto {
+    private String rollName;
     private UUID roleId;
-    @NotNull
     private UUID branchId;
-
 }

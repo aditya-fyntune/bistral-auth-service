@@ -25,9 +25,10 @@ public interface UserCrudService extends UserDetailsService {
     /**
      * Find and Return user of a given id
      * @param userId represent userid
-     * @return {@link  UserResponseDto} represent api contract object of {@link  com.bistral.app.bistral_auth_service.entity.UserEntity}
+     * @return {@link UserEntity} represent user belong to given userId.
      */
-    public UserResponseDto getUserById(UUID userId) throws UserNotFoundException;
+    public UserEntity getUserById(UUID userId) throws UserNotFoundException;
+
 
 
 

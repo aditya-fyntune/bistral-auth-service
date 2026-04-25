@@ -36,7 +36,7 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
      * @param userName represent username of user,
      * @return {@link  UserEntity}
      */
-    Optional<UserEntity> findByUserNameAndIsActiveTrueAndDeletedAtIsNull(String userName);
+    Optional<UserEntity> findByUsernameAndIsActiveTrueAndDeletedAtIsNull(String userName);
 
 
     /**

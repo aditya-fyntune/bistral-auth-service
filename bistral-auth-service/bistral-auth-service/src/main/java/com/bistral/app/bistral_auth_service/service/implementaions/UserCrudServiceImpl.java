@@ -38,7 +38,7 @@ public class UserCrudServiceImpl implements UserCrudService, UserDetailsService 
         UserEntity userEntity =
                 UserEntity.builder()
                         .userEmail(userSignUpDto.getUserEmail())
-                        .userName(userSignUpDto.getUserName())
+                        .username(userSignUpDto.getUserName())
                         .build();
         userEntity.setUserHashPasswd(
                 bCryptPasswordEncoder.encode(userSignUpDto.getPassword())
@@ -48,29 +48,23 @@ public class UserCrudServiceImpl implements UserCrudService, UserDetailsService 
         userEntity = userCrudRepository.save(userEntity);
         return UserResponseDto.builder()
                 .userEmail(userEntity.getUserEmail())
-                .userName(userEntity.getUsername())
+                .username(userEntity.getUsername())
                 .userId(userEntity.getUserId())
-                .userType(userEntity.getUserTypeEnum())
+                .userTypeEnum(userEntity.getUserTypeEnum())
                 .build();
     }
 
     @Override
-    public UserResponseDto getUserById(UUID userId) throws UserNotFoundException {
-        UserEntity userEntity = userCrudRepository
+    public UserEntity getUserById(UUID userId) throws UserNotFoundException {
+        return userCrudRepository
                 .findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId, "User not found with given Id " + userId));
-
-        return UserResponseDto.builder()
-                .userEmail(userEntity.getUserEmail())
-                .userName(userEntity.getUsername())
-                .userId(userEntity.getUserId())
-                .userType(userEntity.getUserTypeEnum())
-                .build();
     }
 
 
     /**
      * get user by username or userEmail based on given input
+     *
      * @param username can be userName or userEmail
      * @return {@link  UserDetails} represent user in a system
      * @throws UsernameNotFoundException
@@ -79,9 +73,9 @@ public class UserCrudServiceImpl implements UserCrudService, UserDetailsService 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         return userCrudRepository
-                .findByUserNameAndIsActiveTrueAndDeletedAtIsNull(username)
+                .findByUsernameAndIsActiveTrueAndDeletedAtIsNull(username)
                 .orElse(userCrudRepository.findByUserEmailAndIsActiveTrueAndDeletedAtIsNull(username)
-                        .orElseThrow(()-> new UsernameNotFoundException("User "+username+"not found "))
+                        .orElseThrow(() -> new UsernameNotFoundException("User " + username + "not found "))
                 );
 
     }

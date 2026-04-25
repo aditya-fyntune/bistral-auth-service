@@ -53,7 +53,7 @@ public class UserEntity implements UserDetails {
     private  UUID userId;
 
     @Column(name = "user_name", nullable = false)
-    private  String userName;
+    private  String username;
 
 
     @Column(name = "user_email", nullable = false)
@@ -93,7 +93,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
 }

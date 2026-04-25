@@ -34,4 +34,7 @@ public class AppConfig {
     public AuthenticationManager getAuthenticationManager(UserCrudService userCrudService){
         return  new ProviderManager(List.of(getAuthenticationProvider(userCrudService)));
     }
+
+    
+
 }

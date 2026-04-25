@@ -5,6 +5,7 @@ import com.bistral.app.bistral_auth_service.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -24,11 +25,12 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Data
+@NoArgsConstructor
 public class UserResponseDto {
 
     private UUID userId;
-    private String userName;
+    private String username;
     private String userEmail;
-    private UserType userType;
+    private UserType userTypeEnum;
 
 }

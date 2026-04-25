@@ -5,9 +5,11 @@ import com.bistral.app.bistral_auth_service.dtos.ApiResponse;
 import com.bistral.app.bistral_auth_service.dtos.CreateUserDto;
 import com.bistral.app.bistral_auth_service.dtos.UserResponseDto;
 import com.bistral.app.bistral_auth_service.exceptions.UserNotFoundException;
+import com.bistral.app.bistral_auth_service.mapper.UserMapper;
 import com.bistral.app.bistral_auth_service.service.interfaces.UserCrudService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,17 +24,20 @@ import java.util.UUID;
 public class UserCrudController {
 
     private final UserCrudService userCrudService;
+    private final UserMapper userMapper;
 
 
     @GetMapping("/{userId}")
-    public ApiResponse<Object> findUserById(@PathVariable UUID userId) throws UserNotFoundException {
-        return  ApiResponse
-                .builder()
-                .data(userCrudService.getUserById(userId))
-                .message("user fetch success fully")
-                .build();
+    public ResponseEntity<ApiResponse<UserResponseDto>> findUserById(@PathVariable UUID userId) throws UserNotFoundException {
+        return ResponseEntity
+                .ok(ApiResponse.<UserResponseDto>
+                                builder()
+                        .data(
+                                userMapper.toUserResponseDto(userCrudService.getUserById(userId))
+                        )
+                        .message("user fetch success fully")
+                        .build());
     }
-
 
 
 }

@@ -2,6 +2,7 @@ package com.bistral.app.bistral_auth_service.service.implementaions;
 
 import com.bistral.app.bistral_auth_service.entity.UserEntity;
 import com.bistral.app.bistral_auth_service.service.interfaces.JwtService;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,8 @@ import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Implementation of JwtService responsible for JWT generation and key management.
@@ -119,6 +122,7 @@ public class JwtServiceImpl implements JwtService {
 
     }
 
+
     /**
      * Generates a JWT refresh token for the given user.
      *
@@ -138,4 +142,46 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
 
     }
+
+    @Override
+    public boolean isTokenValid(String token, UserEntity userEntity) {
+        return false;
+    }
+
+    @Override
+    public String getUserName(String token) {
+        return getClaims(token).get("username",String.class);
+    }
+
+    @Override
+    public Claims getClaims(String token) {
+        return Jwts
+                .parser()
+                .verifyWith(this.publicKey)
+                .build().parseSignedClaims(token)
+                .getPayload();
+    }
+
+    @Override
+    public UUID getUserId(String token) {
+        return UUID.fromString(getClaims(token).getSubject());
+    }
+
+    @Override
+    public UUID getBistroId(String token) {
+        return getClaims(token).get("bistroId",UUID.class);
+    }
+
+    @Override
+    public UUID getBranchId(String token) {
+        return  getClaims(token).get("bistroId",UUID.class);
+    }
+
+    @Override
+    public List<String> getPermissions(String token) {
+        return getClaims(token).get("permission",List.class);
+
+    }
+
+
 }

@@ -24,8 +24,6 @@ public class UserRoleMappingController {
     public ResponseEntity<ApiResponse<Boolean>> assignRole(
             @Valid @RequestBody UserRoleMappingRequestDto userRoleMappingRequestDto
     ) {
-
-
         return
                 new ResponseEntity<ApiResponse<Boolean>>(
                         ApiResponse.<Boolean>builder()

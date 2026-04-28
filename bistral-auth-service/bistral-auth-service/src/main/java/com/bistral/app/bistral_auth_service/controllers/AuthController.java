@@ -1,6 +1,8 @@
 package com.bistral.app.bistral_auth_service.controllers;
 
 
+import com.bistral.app.bistral_auth_service.contexts.AuthContext;
+import com.bistral.app.bistral_auth_service.contexts.UserContextHolder;
 import com.bistral.app.bistral_auth_service.dtos.*;
 import com.bistral.app.bistral_auth_service.service.interfaces.AuthService;
 import com.bistral.app.bistral_auth_service.service.interfaces.UserCrudService;
@@ -65,6 +67,28 @@ public class AuthController {
                         .isError(false)
                         .message("Log in Successfully")
                         .build();
+    }
+
+
+    @PostMapping("/refresh-token")
+    public ApiResponse<AuthResponse> refreshToken(HttpServletRequest request, HttpServletResponse httpServletResponse) throws Exception {
+        String token = request.getHeader("Authorization");
+        if(token==null || token.isEmpty() || token.startsWith("Bearer "))
+            throw new IllegalArgumentException("Invalid Token");
+
+        AuthResponse response = authService
+                .refreshToken(token.split("Bearer ")[1]);
+        String cookie = String.format(
+                "user_refresh_token=%s; Path=/; HttpOnly; SameSite=Lax; Max-Age=%d",
+                response.getRefreshToken(), 7 * 24 * 60 * 60);
+        httpServletResponse.setHeader("Set-Cookie", cookie);
+        return
+                ApiResponse.<AuthResponse>builder()
+                        .data(response)
+                        .isError(false)
+                        .message("Log in Successfully")
+                        .build();
+
     }
 
 }

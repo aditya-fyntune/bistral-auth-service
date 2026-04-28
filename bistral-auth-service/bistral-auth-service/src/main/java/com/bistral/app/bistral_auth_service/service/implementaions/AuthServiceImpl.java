@@ -1,10 +1,12 @@
 package com.bistral.app.bistral_auth_service.service.implementaions;
 
+import com.bistral.app.bistral_auth_service.contexts.AuthContext;
 import com.bistral.app.bistral_auth_service.contexts.UserContextHolder;
 import com.bistral.app.bistral_auth_service.dtos.AuthResponse;
 import com.bistral.app.bistral_auth_service.dtos.LoginContext;
 import com.bistral.app.bistral_auth_service.dtos.UserLoginRequest;
 import com.bistral.app.bistral_auth_service.entity.UserEntity;
+import com.bistral.app.bistral_auth_service.exceptions.UserNotFoundException;
 import com.bistral.app.bistral_auth_service.service.interfaces.AuthService;
 import com.bistral.app.bistral_auth_service.service.interfaces.JwtService;
 import com.bistral.app.bistral_auth_service.service.interfaces.UserCrudService;
@@ -56,8 +58,23 @@ public class AuthServiceImpl implements AuthService {
      * @return AuthResponse with refreshed access token
      */
     @Override
-    public AuthResponse refreshToken(String refreshToken) {
-        return null;
+    public AuthResponse refreshToken(String refreshToken) throws Exception {
+        AuthContext authContext = UserContextHolder.getAuthContext();
+        LoginContext context = LoginContext
+                .builder()
+                .permission(authContext.getPermissions().stream().toList())
+                .bistroId(authContext.getBistroId())
+                .branchId(authContext.getBranchId())
+                .roleId(authContext.getRoleId())
+                .build();
+        UserEntity user = userCrudService.getUserById(authContext.getUserId());
+        return AuthResponse
+                .builder()
+                .user(user)
+                .accessToken(jwtService.getAccessToken(user,context))
+                .refreshToken(jwtService.getRefreshToken(user))
+                .build();
+
     }
 
     @Override

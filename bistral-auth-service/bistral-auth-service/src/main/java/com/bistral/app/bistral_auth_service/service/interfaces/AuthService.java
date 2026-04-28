@@ -30,7 +30,7 @@ public interface AuthService {
      * * @param refreshToken the refresh token
      * * @return new authentication response with fresh access token
      */
-    public AuthResponse refreshToken(String AccessToken);
+    public AuthResponse refreshToken(String AccessToken) throws Exception;
 
     /**
      *

@@ -17,7 +17,7 @@ public interface ResourceCrudService {
 
     public ResourceEntity findResourceById(UUID resourceId);
 
-    public List<ResourceEntity> getResourcesList();
+    public List<ResourceResponseDto> getResourcesList();
 
 
 

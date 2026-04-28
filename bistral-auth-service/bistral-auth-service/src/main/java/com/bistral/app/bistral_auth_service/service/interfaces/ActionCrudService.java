@@ -19,9 +19,9 @@ public interface ActionCrudService {
 
     public ActionEntity getActionById(UUID actionId);
 
-    public ActionEntity updateAction(ActionRequestDto actionRequestDto);
+    public ActionResponseDto updateAction(ActionRequestDto actionRequestDto);
 
-    public List<ActionEntity> getAllActions();
+    public List<ActionResponseDto> getAllActions();
 
 
 

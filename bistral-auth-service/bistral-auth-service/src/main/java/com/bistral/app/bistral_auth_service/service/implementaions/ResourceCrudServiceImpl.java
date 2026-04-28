@@ -2,9 +2,11 @@ package com.bistral.app.bistral_auth_service.service.implementaions;
 
 import com.bistral.app.bistral_auth_service.contexts.UserContextHolder;
 import com.bistral.app.bistral_auth_service.dtos.ResourceRequestDto;
+import com.bistral.app.bistral_auth_service.dtos.ResourceResponseDto;
 import com.bistral.app.bistral_auth_service.entity.ResourceEntity;
 import com.bistral.app.bistral_auth_service.entity.UserEntity;
 import com.bistral.app.bistral_auth_service.exceptions.ResourceNotFoundExceptions;
+import com.bistral.app.bistral_auth_service.mapper.ResourceMapper;
 import com.bistral.app.bistral_auth_service.repository.ResourceRepository;
 import com.bistral.app.bistral_auth_service.service.interfaces.ResourceCrudService;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.UUID;
 public class ResourceCrudServiceImpl implements ResourceCrudService {
 
     private final ResourceRepository resourceRepository;
+    private final ResourceMapper resourceMapper;
 
     @Override
     public ResourceEntity createResource(ResourceRequestDto resourceRequestDto) {
@@ -42,7 +45,9 @@ public class ResourceCrudServiceImpl implements ResourceCrudService {
     }
 
     @Override
-    public List<ResourceEntity> getResourcesList() {
-        return List.of();
+    public List<ResourceResponseDto> getResourcesList() {
+        return resourceRepository
+                .findAll().stream()
+                .map(resourceMapper::toResourceResponse).toList();
     }
 }

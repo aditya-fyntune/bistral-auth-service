@@ -13,4 +13,5 @@ public interface ResourceMapper {
     ResourceEntity toResourceEntity(ResourceRequestDto resourceRequestDto);
 
     ResourceResponseDto toResourceResponse(ResourceEntity resourceEntity);
+
 }

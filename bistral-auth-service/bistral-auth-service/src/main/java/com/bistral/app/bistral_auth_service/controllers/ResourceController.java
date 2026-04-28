@@ -4,6 +4,7 @@ package com.bistral.app.bistral_auth_service.controllers;
 import com.bistral.app.bistral_auth_service.dtos.ApiResponse;
 import com.bistral.app.bistral_auth_service.dtos.ResourceRequestDto;
 import com.bistral.app.bistral_auth_service.dtos.ResourceResponseDto;
+import com.bistral.app.bistral_auth_service.entity.ResourceEntity;
 import com.bistral.app.bistral_auth_service.mapper.ResourceMapper;
 import com.bistral.app.bistral_auth_service.service.interfaces.ResourceCrudService;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -50,5 +52,18 @@ public class ResourceController {
                         .build(),
                 HttpStatus.CREATED
         );
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<ResourceResponseDto>>> getResources() {
+        return ResponseEntity
+                .ok(
+                        ApiResponse.<List<ResourceResponseDto>>builder()
+                                .message("Resource found Successfully")
+                                .data(
+                                        resourceCrudService.getResourcesList()
+                                ).build()
+                );
     }
 }

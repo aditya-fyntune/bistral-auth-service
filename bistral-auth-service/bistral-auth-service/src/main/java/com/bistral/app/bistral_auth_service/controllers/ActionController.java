@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -46,6 +47,17 @@ public class ActionController {
                                 actionCrudService.createAction(actionRequestDto)
                         ).build(),
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/list")
+    ResponseEntity<ApiResponse<List<ActionResponseDto>>> getActionList(){
+        return ResponseEntity.ok(
+                ApiResponse.<List<ActionResponseDto>>
+                        builder()
+                        .message("Action List Found Successfully")
+                        .data(actionCrudService.getAllActions())
+                        .build()
         );
     }
 

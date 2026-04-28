@@ -46,12 +46,16 @@ public class ActionCrudServiceImpl implements ActionCrudService {
     }
 
     @Override
-    public ActionEntity updateAction(ActionRequestDto actionRequestDto) {
+    public ActionResponseDto updateAction(ActionRequestDto actionRequestDto) {
         return null;
     }
 
     @Override
-    public List<ActionEntity> getAllActions() {
-        return List.of();
+    public List<ActionResponseDto> getAllActions() {
+        return actionRepository
+                .findAll()
+                .stream()
+                .map(actionMapper::toActionResponse)
+                .toList();
     }
 }
